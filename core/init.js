@@ -8,6 +8,7 @@ class InitManager {
         InitManager.app = app;
         InitManager.initLoadRouters()
         InitManager.loadHttpException()
+        InitManager.loadConfig()
     }
 
     //初始化路由
@@ -21,6 +22,12 @@ class InitManager {
                 InitManager.app.use(obj.routes())
             }
         }
+    }
+
+    static loadConfig() {
+        const configPath = `${process.cwd()}/config/config.js`;
+        const config = require(configPath);
+        global.config = config
     }
 
     static loadHttpException() {

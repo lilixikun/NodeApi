@@ -2,6 +2,9 @@ const koa = require('koa')
 const parser = require('koa-bodyparser')
 const InitManager = require('./core/init.js')
 const catchError = require('./widdlewares/exception.js')
+
+require('./models/user.js')
+
 const app = new koa()
 
 app.use(catchError)
