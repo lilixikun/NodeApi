@@ -1,7 +1,11 @@
 const Router = require('koa-router')
-const router = new Router()
+const router = new Router({
+    prefix: '/v1/classic'
+})
 
-router.get('/v1/classic/latest', (ctx, next) => {
+const { Auth } = require('../../validators/auth')
+
+router.get('/latest', new Auth().m, (ctx, next) => {
     ctx.body = 'classic'
 })
 
