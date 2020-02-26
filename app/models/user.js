@@ -4,7 +4,21 @@ const { sequelize } = require('../../core/db')
 const { Sequelize, Model } = require('sequelize')
 
 class User extends Model {
-
+    static async verifyEmailPassword(email, password) {
+        const user = await User.findOne({
+            where: {
+                email,
+            }
+        })
+        if (!user) {
+            throw new global.errors.NotFound('账号不存在!')
+        }
+        const correct = bcryptjs.compareSync(password, user.password)
+        if (!correct) {
+            throw new global.errors.AuthFailed('密码不正确!')
+        }
+        return user
+    }
 }
 
 User.init({
@@ -27,7 +41,7 @@ User.init({
             const salt = bcryptjs.genSaltSync(10);
             //加密密码
             const pwd = bcryptjs.hashSync(val, salt);
-            this.setDataValue('password',pwd)
+            this.setDataValue('password', pwd)
         }
     },
     openid: {

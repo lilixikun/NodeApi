@@ -9,26 +9,28 @@ const router = new Router({
 
 router.post('/register', async (ctx) => {
 
-    const parms = ctx.request.body;
+    const { nickname, email, password, openid } = ctx.request.body;
     const user = {
-        nickname: parms.nickname,
-        email: parms.email,
-        password: parms.password,
-        openid: parms.openid
+        nickname,
+        email,
+        password,
+        openid
     }
 
-
+    if (!nickname || !email || !password) {
+        throw new global.errors.ParameterException('参数不全!')
+    }
 
     const rs = await User.findOne({
         where: {
-            email: parms.email
+            email: email
         }
     })
-    console.log(rs);
+    if (!!rs) {
+        throw new global.errors.ParameterException('该账户已注册!')
+    }
 
-    //  参数校验
-    // const r = await User.create(user);
-    // console.log(r);
+    await User.create(user);
 
     // 用抛出异常的方式返回Success
     throw new global.errors.Success()

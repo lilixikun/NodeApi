@@ -23,13 +23,35 @@ class Success extends HttpException {
     constructor(msg, errorCode) {
         super()
         this.code = 201
-        this.msg = 'ok' || msg
+        this.msg = msg || 'ok'
         this.errorCode = errorCode || 0
+    }
+}
+
+
+class NotFound extends HttpException {
+    constructor(msg, errorCode) {
+        super()
+        this.code = 404
+        this.msg = msg || '未找到'
+        this.errorCode = errorCode || 404
+    }
+}
+
+
+class AuthFailed extends HttpException {
+    constructor(msg, errorCode) {
+        super()
+        this.code = 401
+        this.msg = msg || '未找到'
+        this.errorCode = errorCode || 1004
     }
 }
 
 module.exports = {
     HttpException,
     ParameterException,
-    Success
+    Success,
+    NotFound,
+    AuthFailed
 }
