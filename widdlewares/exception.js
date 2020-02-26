@@ -5,7 +5,7 @@ const catchError = async (ctx, next) => {
     try {
         await next()
     } catch (error) {
-        if (global.config.environment === 'dev') {
+        if (global.config.environment === 'dev' && !(error instanceof HttpException)) {
             throw error;
         }
         if (error instanceof HttpException) {

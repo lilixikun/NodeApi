@@ -1,5 +1,5 @@
 //重命名
-const { sequelize } = require('../core/db')
+const { sequelize } = require('../../core/db')
 
 const { Sequelize, Model } = require('sequelize')
 
@@ -16,7 +16,10 @@ User.init({
         autoIncrement: true //自增
     },
     nickname: Sequelize.STRING,
-    email: Sequelize.STRING,
+    email: {
+        type: Sequelize.STRING(128),
+        unique: true
+    },
     password: Sequelize.STRING,
     openid: {
         type: Sequelize.STRING(64),
@@ -26,3 +29,7 @@ User.init({
     sequelize,
     tableName: 'user'
 })
+
+module.exports = {
+    User
+}
