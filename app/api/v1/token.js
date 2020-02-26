@@ -4,6 +4,7 @@ const { LoginType } = require('../../lib/enum')
 const { User } = require('../../models/user')
 const { ParameterException } = require('../../../core/httpException')
 
+const { generateToken } = require('../../../core/utils')
 const router = new Router({
     prefix: '/v1/token'
 })
@@ -14,9 +15,10 @@ router.post('/', async (ctx) => {
     if (!LoginType.isLoginType(body.type)) {
         throw new ParameterException('type 类型不对')
     }
+    let token;
     switch (body.type) {
         case LoginType.USER_EMAIL:
-            await emailLogin(body.account, body.secret)
+            token = await emailLogin(body.account, body.secret)
             break;
         case LoginType.USER_XCX:
 
@@ -25,10 +27,16 @@ router.post('/', async (ctx) => {
         default:
             throw new global.errors.ParameterException('没有相应的函数处理!')
     }
+    ctx.body = {
+        token
+    }
 })
 
 async function emailLogin(account, secret) {
     const user = await User.verifyEmailPassword(account, secret)
+    
+    //生成令牌
+    return generateToken(user.id, 2)
 }
 
 module.exports = router
