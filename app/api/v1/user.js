@@ -38,3 +38,6 @@ router.post('/register', async (ctx) => {
 })
 
 module.exports = router
+
+// token 无意义的随机字符串
+// jwt 携带数据的token  uid
