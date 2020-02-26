@@ -34,6 +34,16 @@ router.post('/', async (ctx) => {
     }
 })
 
+
+router.post('/verifyToken', async (ctx, next) => {
+    const body = ctx.request.body;
+    if (!body.token) {
+        throw new ParameterException('token 不允许为空!')
+    }
+    const res = await Auth.verifyToken(body.token)
+    
+})
+
 async function emailLogin(account, secret) {
     const user = await User.verifyEmailPassword(account, secret)
 

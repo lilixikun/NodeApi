@@ -21,8 +21,9 @@ class WXManager {
         }
 
         const errcode = result.data.errcode
-        if (errcode !== 0) {
-            throw new global.errors.AuthFailed('openid获取失败:' + errcode)
+        const errmsg = result.data.errmsg
+        if (errcode) {
+            throw new global.errors.AuthFailed('openid获取失败:' + errmsg)
         }
 
         //获取 openid
