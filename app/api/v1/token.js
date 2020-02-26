@@ -6,7 +6,7 @@ const { ParameterException } = require('../../../core/httpException')
 
 const { generateToken } = require('../../../core/utils')
 const { Auth } = require('../../validators/auth')
-
+const { WXManager } = require('../../services/wx')
 const router = new Router({
     prefix: '/v1/token'
 })
@@ -23,7 +23,7 @@ router.post('/', async (ctx) => {
             token = await emailLogin(body.account, body.secret)
             break;
         case LoginType.USER_XCX:
-
+            token = await WXManager.codeToToken(body.code)
             break;
 
         default:
