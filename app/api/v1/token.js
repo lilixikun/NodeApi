@@ -5,6 +5,8 @@ const { User } = require('../../models/user')
 const { ParameterException } = require('../../../core/httpException')
 
 const { generateToken } = require('../../../core/utils')
+const { Auth } = require('../../validators/auth')
+
 const router = new Router({
     prefix: '/v1/token'
 })
@@ -34,9 +36,9 @@ router.post('/', async (ctx) => {
 
 async function emailLogin(account, secret) {
     const user = await User.verifyEmailPassword(account, secret)
-    
+
     //生成令牌
-    return generateToken(user.id, 2)
+    return generateToken(user.id, Auth.USER)
 }
 
 module.exports = router
