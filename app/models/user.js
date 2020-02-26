@@ -1,4 +1,4 @@
-//重命名
+const bcryptjs = require('bcryptjs')
 const { sequelize } = require('../../core/db')
 
 const { Sequelize, Model } = require('sequelize')
@@ -20,7 +20,16 @@ User.init({
         type: Sequelize.STRING(128),
         unique: true
     },
-    password: Sequelize.STRING,
+    password: {
+        type: Sequelize.STRING,
+        set(val) {
+            //生成盐
+            const salt = bcryptjs.genSaltSync(10);
+            //加密密码
+            const pwd = bcryptjs.hashSync(val, salt);
+            this.setDataValue('password',pwd)
+        }
+    },
     openid: {
         type: Sequelize.STRING(64),
         unique: true

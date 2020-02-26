@@ -1,5 +1,7 @@
+
 const Router = require('koa-router')
 const { User } = require('../../models/user.js')
+const { success } = require('../../lib/helper')
 const router = new Router({
     prefix: '/v1/user'
 })
@@ -15,6 +17,8 @@ router.post('/register', async (ctx) => {
         openid: parms.openid
     }
 
+
+
     const rs = await User.findOne({
         where: {
             email: parms.email
@@ -25,6 +29,12 @@ router.post('/register', async (ctx) => {
     //  参数校验
     // const r = await User.create(user);
     // console.log(r);
+
+    // 用抛出异常的方式返回Success
+    throw new global.errors.Success()
+
+    // 定义方法返回
+    // success()
 })
 
 module.exports = router
