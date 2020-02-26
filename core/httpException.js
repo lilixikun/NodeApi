@@ -39,6 +39,15 @@ class NotFound extends HttpException {
 }
 
 
+class ForBbiden extends HttpException {
+    constructor(msg, errorCode) {
+        super()
+        this.code = 403
+        this.msg = msg || '禁止访问'
+        this.errorCode = errorCode || 1006
+    }
+}
+
 class AuthFailed extends HttpException {
     constructor(msg, errorCode) {
         super()
@@ -53,5 +62,6 @@ module.exports = {
     ParameterException,
     Success,
     NotFound,
-    AuthFailed
+    AuthFailed,
+    ForBbiden
 }

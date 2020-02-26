@@ -6,7 +6,7 @@ const router = new Router({
 const { Auth } = require('../../validators/auth')
 
 router.get('/latest', new Auth().m, (ctx, next) => {
-    ctx.body = 'classic'
+    ctx.body = ctx.auth.uid
 })
 
 module.exports = router
