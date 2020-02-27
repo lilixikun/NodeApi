@@ -4,6 +4,8 @@ const InitManager = require('./core/init.js')
 const catchError = require('./widdlewares/exception.js')
 
 require('./app/models/user.js')
+require('./app/models/classic.js')
+require('./app/models/flow.js')
 
 const app = new koa()
 
