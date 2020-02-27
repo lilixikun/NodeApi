@@ -28,3 +28,8 @@ Sequelize.ENUM('value 1', 'value 2')  // ENUM                          类型：
 
 Sequelize.BLOB                        // BLOB                          类型：二进制数据
 Sequelize.BLOB('tiny')                // TINYBLOB                      类型：二进制数据  
+
+
+小程序 BASE64 加密
+
+js-base64

@@ -6,7 +6,7 @@ const router = new Router({
 const { Flow } = require('../../models/flow')
 
 const { Auth } = require('../../validators/auth')
-
+const { Art } = require('../../models/art')
 router.get('/latest', new Auth().m, async (ctx, next) => {
     // 找 index 最大 max
     // 排序 1 2 3 ... max
@@ -15,9 +15,12 @@ router.get('/latest', new Auth().m, async (ctx, next) => {
             ['index', 'DESC']
         ]
     })
-    console.log(flow);
+    const art = await Art.getData(flow.art_id, flow.type)
 
-    ctx.body = flow
+    //  返回的都是模型 dataValues 下的值
+    // art.dataValues.xx=xx
+    art.setDataValue('index', flow.index)
+    ctx.body = art
 })
 
 module.exports = router
