@@ -20,7 +20,7 @@ class Auth {
                 throw new global.errors.ForBbiden(errMsg)
             }
 
-            // tokon严重
+            // tokon验证
             try {
                 var decode = jwt.verify(token.name, global.config.security.secretKey)
             } catch (error) {
