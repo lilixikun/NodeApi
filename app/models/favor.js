@@ -1,6 +1,6 @@
 const { sequelize } = require('../../core/db')
 
-const { Sequelize, Model } = require('sequelize')
+const { Sequelize, Model, Op } = require('sequelize')
 const { Art } = require('./art')
 
 class Favor extends Model {
@@ -53,6 +53,29 @@ class Favor extends Model {
             const art = await Art.getData(arr_id, type);
             await art.decrement('fav_nums', { by: 1, transaction: t })
         })
+    }
+
+    static async getMyClassicFavors(uid) {
+        // 查询不包括 400的 收藏
+        const arts = await Favor.findAll({
+            where: {
+                type: {
+                    [Op.not]: 400
+                }
+            }
+        })
+
+        if (!arts) {
+            throw new global.errors.NotFound()
+        }
+
+        // 数组 arts 循环查询数据库? ->危险
+        // for (const art of arts) {
+        //     Art.getData()
+        // }
+
+        // sql in 查询
+        return await Art.getList(arts)
     }
 }
 

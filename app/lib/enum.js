@@ -1,5 +1,5 @@
 //模拟枚举
-function isLoginType(val) {
+function isThisType(val) {
     for (const key in this) {
         if (this[key] == val) {
             return true
@@ -13,9 +13,19 @@ const LoginType = {
     USER_EMAIL: 101,
     USER_MOBILE: 102,
     ADMID_EMAIL: 103,
-    isLoginType
+    isThisType
+}
+
+
+const ArtType = {
+    MOVIE: 100,
+    MUSIC: 200,
+    SENTENCE: 300,
+    BOOK: 400,
+    isThisType
 }
 
 module.exports = {
-    LoginType
+    LoginType,
+    ArtType
 }

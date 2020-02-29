@@ -14,7 +14,7 @@ const router = new Router({
 
 router.post('/', async (ctx) => {
     const body = ctx.request.body;
-    if (!LoginType.isLoginType(body.type)) {
+    if (!LoginType.isThisType(body.type)) {
         throw new ParameterException('type 类型不对')
     }
     let token;
