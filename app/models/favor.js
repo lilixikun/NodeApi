@@ -59,6 +59,7 @@ class Favor extends Model {
         // 查询不包括 400的 收藏
         const arts = await Favor.findAll({
             where: {
+                uid,
                 type: {
                     [Op.not]: 400
                 }
